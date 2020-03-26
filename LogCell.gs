@@ -9,21 +9,14 @@ var parseJsonSheet = {
     SheetName: "Parse_Json",
     Cells: {
       "B1": "C5", //cell which want to observe, the first cell which record the update (from top to buttom)
-      "B2": "D3"
+      "B2": "D5"
     }
 };
 
-//// Example of Sheet logger instance
-var somethingSheet = {
-    SheetName: "Something",
-    Cells: {
-      "A1": "B5"
-    }
-};
 
 /// Add the logger sheet instance to this variable
 var _sheetLoggers = [
-  parseJsonSheet, somethingSheet
+  parseJsonSheet
 ];
 
 // End Configuration
@@ -34,7 +27,9 @@ var _sheetLoggers = [
 function onEdit(e){
   var sheet = e.source.getActiveSheet();
   var range = e.range;
-  var value = e.value;
+  var value = sheet.getRange(range.getA1Notation()).getValue();
+  
+  Logger.log("Execute on edit at "+range.getA1Notation()+" with value : "+e.value);
   
   if(value == "" || value == null || value == undefined)
     return;
@@ -54,6 +49,8 @@ function Log(sheet, startCell, value){
   
   if(!IsContainValue(ranges, value))
     WriteText(sheet, cellNotation, value);
+  else
+    Logger.log("ranges ["+startCell+":"+cellNotation+"] has already exist value : "+value);
 }
 
 function GetLastEmptyCell(sheet, startCell) {
@@ -66,10 +63,14 @@ function GetLastEmptyCell(sheet, startCell) {
     lastIndex = startIndex;
   else{
     var previousCell = column + (lastIndex - 1);
-    while(lastIndex > startIndex && sheet.getRange( previousCell).isBlank()){
+    while(lastIndex > startIndex && sheet.getRange(previousCell).isBlank()){
       lastIndex = lastIndex - 1;
+      previousCell = column + (lastIndex - 1);
+      Logger.log("cell ["+previousCell+"] is empty then backward to {"+lastIndex+"}");
     }
   }
+  
+  Logger.log("last cell is -> "+column+""+lastIndex);
   
   return column+""+lastIndex;
   
