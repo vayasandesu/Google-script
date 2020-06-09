@@ -44,7 +44,7 @@ function ClearSheet(sheet, labelRange){
 function IsDataSheet(sheet){
   var updateSheetName = sheet.getName();
   
-    if(input.MasterSheet == updateSheetName)
+    if(setup.MasterSheet == updateSheetName)
       return false;
     
   

@@ -122,6 +122,8 @@ function GetColumnsIndex(sheet, labels){
   labels.forEach(function(label, i){
     var index = ranges.indexOf(label) + 1;
     indexs[label] = index;
+    if(index <= 0)
+      Logger.log(sheet.getName()+" is not found Key : "+label);
   });
   
   return indexs;
