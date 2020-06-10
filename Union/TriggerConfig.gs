@@ -4,23 +4,18 @@ var setup = [
     MasterSheet : "Master2",
     DataSheet : [
       "FB_Mod2",
-      "LN_Mod2"
+      "LN_Mod2",
+      "Test_Mod2"
     ],
     Notation: "A1:Z1"
   }
 ];
 
-
-function onEdit(e) {
+function AutoUpdate(){
+  
   
   var spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
-  var updateSheet = e.range.getSheet();
-  
-  if(!IsDataSheet(updateSheet)){
-     Logger.log("User update file : "+updateSheet.getName() +" which not data sheet");
-     return; 
-  }  
-     
+
   setup.forEach(function(input, i){
     var masterSheet = spreadSheet.getSheetByName(input.MasterSheet);
     if(masterSheet == null)
@@ -33,6 +28,17 @@ function onEdit(e) {
     UnionSheet(input.MasterSheet, input.DataSheet, labels);
   });
   
+}
+
+function onEdit(e) {
+  var spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+  var updateSheet = e.range.getSheet();
+  
+  if(!IsDataSheet(updateSheet)){
+     Logger.log("User update file : "+updateSheet.getName() +" which not data sheet");
+     return; 
+  }  
+  AutoUpdate();
 }
 
 function ClearSheet(sheet, labelRange){
