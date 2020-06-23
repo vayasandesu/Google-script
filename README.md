@@ -6,3 +6,5 @@ This is a practice google script project.
 clone range from source sheet to destination sheet
 use via trigger or script execution
 
+## Union
+Similar Union
