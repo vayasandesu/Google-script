@@ -1,9 +1,10 @@
-var config = [
-  {
+/*
+array or object type with structure below
+{
     source : {
       url: "https://docs.google.com/spreadsheets/d/1bPpypsvX3-5EH68kR0Dy_zQ9gHiOGnEq7N-9NgHkaaM/edit#gid=0",
       sheetName: "แผ่น1",
-      columns: [
+      columns: [ // if columns is null , clone everything in sheet
         "A", "D"
       ]
     },
@@ -11,10 +12,9 @@ var config = [
       url: "https://docs.google.com/spreadsheets/d/1beALcbanQCG8d4vyS9kPYHDN3dsEIo5gZMQIa9cWrGI/edit#gid=0",
       sheetName: "Backup"
     } 
-  }
-]
-
-function Backup() {
+}
+*/
+function Execute(config) {
   if(Array.isArray(config)){
     config.forEach(function(c, i){
       run(c);
