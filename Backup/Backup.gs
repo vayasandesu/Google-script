@@ -26,6 +26,9 @@ function Execute(config) {
 }
 
 function run(config){
+  if(config == null)
+    throw "config cannot be empty";
+  
   var source = config.source;
   var destination = config.destination;
   
@@ -33,7 +36,7 @@ function run(config){
   var destinationSheet = SpreadsheetApp.openByUrl(destination.url).getSheetByName(destination.sheetName);
   
   if(destinationSheet == null)
-    throw "Sheet "+ destination.sheetName + " doesn't exist";
+    throw "Destination sheet named ["+ destination.sheetName + "] doesn't exist";
   
   var lr = sourceData.row; //sourceData.getLastRow();
   var lc = sourceData.column; //sourceData.getLastColumn();
@@ -44,7 +47,14 @@ function run(config){
 
 function getData(config){
   var spreadsheet = SpreadsheetApp.openByUrl(config.url);
+  
+  if(spreadsheet == null)
+    throw "cannot open spreadsheet from url ["+config.url+"]"; 
+  
   var sheet = spreadsheet.getSheetByName(config.sheetName);
+  
+   if(sheet == null)
+    throw "cannot open source sheet named ["+config.sheetName+"]"; 
   
   var output = {
     data: [],
